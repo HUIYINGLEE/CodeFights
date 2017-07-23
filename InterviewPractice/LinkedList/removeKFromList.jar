@@ -1,0 +1,15 @@
+ListNode<Integer> removeKFromList(ListNode<Integer> l, int k) {
+    while(l!=null && l.value.equals(k)){
+        l=l.next;  
+    }
+    if(l==null){return l;}
+    ListNode<Integer> ll=l;
+    
+    while(ll.next !=null){
+        if(ll.next.value.equals(k)){
+            ll.next=ll.next.next;
+        }
+        else{ll=ll.next;}
+    }
+    return l;
+}
