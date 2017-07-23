@@ -1,0 +1,135 @@
+boolean sudoku2(char[][] grid) {
+    return colValidate(grid) && rowValidate(grid) && subGridVali(grid);
+}
+
+//this function is used to validate all the cols
+boolean colValidate(char[][] grid){
+    char[][] rotated=rotate(grid);
+    for(int row=0; row<rotated.length; row++){
+        if(validate(rotated[row])==false){
+            return false;
+        }
+    }
+    return true;
+}
+
+//this function is used to validate all the rows
+boolean rowValidate(char[][] grid){
+    for(int row=0; row<grid.length; row++){
+        if(validate(grid[row])==false){
+            return false;
+        }
+    }
+    return true;
+}
+
+//this function is used to validate all the subgrids
+boolean subGridVali(char[][] grid){
+    for (char[][] sg: subGrid(grid)){
+        if(gridValidate(sg)==false){
+            System.out.println("false");
+            return false;
+        }
+    }
+    return true;
+}
+
+//this functions is use the validate both the cols and rows
+boolean validate(char[] arr){
+    HashSet<Integer> set=new HashSet<>(); 
+    for (char c: arr){
+        if(c!='.'){
+            int no=Character.getNumericValue(c);
+            if (no<1 || no>9){return false;}
+            else{
+                if(set.contains(no)){return false;}
+                set.add(no);
+            }
+        }
+    }
+    return true;
+}
+
+//this function is used to validate a subgrid
+boolean gridValidate(char[][] subgrid){
+    int fLen=subgrid.length*subgrid.length;
+    char[] flaten=new char[fLen];
+    int subSize=subgrid.length;
+    for(int n=0; n<fLen; n++){
+        flaten[n]=subgrid[n/subSize][n%subSize];
+    }
+    return validate(flaten);
+    
+}
+
+//this function is used to rotate the grid from row to col
+char[][] rotate(char[][] grid){
+    char[][] rotated=new char[grid.length][grid[0].length];
+    for(int row=0; row<grid.length; row++){
+        for(int col=0; col<grid[0].length;col++){
+            rotated[col][grid.length-1-row]=grid[row][col];
+        }
+    }
+    return rotated;              
+}
+
+//this function is used to segment the grid into 3x3 subgrid
+char[][][] subGrid(char[][] grid){
+    int subSize=(int)Math.sqrt(grid.length);
+    char[][][] subgrid=new char[grid.length][subSize][subSize];
+    int new3D=0;
+    for(int row=0; row<grid.length; row+=subSize){
+        for(int col=0; col<grid.length; col+=subSize){
+            int iLimit=row+subSize;
+            int newRow=0;
+            for(int i=row; i<iLimit; i++){
+                int newCol=0;
+                int jLimit=col+subSize;
+                for(int j=col; j<jLimit; j++){
+                    subgrid[new3D][newRow][newCol]=grid[i][j];
+                    newCol+=1;    
+                }
+                newRow+=1;
+            }
+        new3D+=1; 
+        
+        }
+        
+    }
+    return subgrid;
+}
+
+
+
+
+
+//below is the solution from thegreenoak
+boolean sudoku2(char[][] grid) {
+    for (int i = 0; i < 9; i++) {
+
+        char[] row = new char[9];
+        char[] square = new char[9];
+        char[] column = grid[i].clone();
+
+        for (int j = 0; j < 9; j ++) {
+            row[j] = grid[j][i];
+            square[j] = grid[(i / 3) * 3 + j / 3][i * 3 % 9 + j % 3];
+        }
+        if (!(validate(column) && validate(row) && validate(square)))
+            return false;
+    }
+    return true;
+}
+
+private boolean validate(char[] check) {
+    String i = "";
+    Arrays.sort(check);
+    for (char number : check) {
+        if(i.indexOf(number)!=-1 && number!='.')
+            return false;
+        if(number!='.')
+            i+=number;
+    }
+    return true;
+}
+
