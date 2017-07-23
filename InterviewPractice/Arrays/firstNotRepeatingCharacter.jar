@@ -1,0 +1,31 @@
+//LinkedHashMap is used to record the order the char in the input string
+char firstNotRepeatingCharacter(String s) {
+    char[] cArr=s.toCharArray();
+    LinkedHashMap<Character, Integer> map=new LinkedHashMap<Character, Integer>();
+    for(char c: cArr){
+        if (map.containsKey(c)){
+            map.put(c,map.get(c)+1);
+        }else{
+            map.put(c,0);
+        }  
+    }
+    
+    Object[] notRep;
+    notRep=map.entrySet().stream().filter(entry-> entry.getValue()==0).map(Map.Entry::getKey).toArray();
+    if(notRep.length==0){
+        return '_';
+    } 
+    return (Character)notRep[0];
+                                          
+}
+
+//anohter solution from kishan_madhwani
+char firstNotRepeatingCharacter(String s) {
+    char[] c=s.toCharArray();
+for(int i=0;i<s.length();i++){
+    if(s.indexOf(c[i])==s.lastIndexOf(c[i]))
+        return c[i];
+}
+    return '_';
+}
+
