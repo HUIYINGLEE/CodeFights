@@ -1,0 +1,55 @@
+// Definition for singly-linked list:
+// class ListNode<T> {
+//   ListNode(T x) {
+//     value = x;
+//   }
+//   T value;
+//   ListNode<T> next;
+// }
+//
+ListNode<Integer> addTwoHugeNumbers(ListNode<Integer> a, ListNode<Integer> b) {
+    ListNode<Integer> reverseA=reverse(a);
+    ListNode<Integer> reverseB=reverse(b);
+    ListNode<Integer> result=null;
+    Integer plus=0;
+    while(reverseA!=null || reverseB!=null){
+        Integer addV=plus+(reverseA==null? 0:reverseA.value)+(reverseB==null?0:reverseB.value);
+        result=addNodeToFront(addV, result);
+        plus=0;
+        if(result.value>=10000){
+            result.value=result.value-10000;
+            plus=1;
+        }
+        if(reverseA!=null){reverseA=reverseA.next;}
+        if(reverseB!=null){reverseB=reverseB.next;}
+    }
+    if(plus>0){
+        result=addNodeToFront(1,result);
+    }
+    return result;
+}
+
+ListNode<Integer> reverse(ListNode<Integer> node){
+    ListNode<Integer> pre=null;
+    ListNode<Integer> curr=null;
+    while(node!=null){
+        ListNode<Integer> next=node.next;
+        curr=node;
+        node.next=pre;
+        pre=node;
+        node=next;    
+    }
+    return pre;
+}
+
+ListNode<Integer> addNodeToFront(Integer addNode, ListNode<Integer> headNode){
+    if(headNode==null){
+        headNode=new ListNode(addNode);
+        return headNode;
+    }
+    else{
+        ListNode<Integer> newHead=new ListNode<Integer>(addNode);
+        newHead.next=headNode;
+        return newHead;
+    }
+}
