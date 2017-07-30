@@ -1,0 +1,67 @@
+// Definition for singly-linked list:
+// class ListNode<T> {
+//   ListNode(T x) {
+//     value = x;
+//   }
+//   T value;
+//   ListNode<T> next;
+// }
+//
+//
+//use recursion
+ListNode<Integer> reverseNodesInKGroups(ListNode<Integer> l, int k) {
+    if(k<2){return l;}
+    int len=countNodes(l);
+    if(len<k){return l;}
+    int loops=len/k;
+    ListNode<Integer> returnHead=l;
+    ListNode<Integer> preL=null;
+    for (int i=0; i<loops; i++){
+        Heads heads=reverseK(preL,l,k);
+        if(i==0){
+            returnHead=heads.head1;
+        }
+        l=heads.head2;
+        preL=heads.tail1;
+    }
+    return returnHead;
+}
+
+Heads reverseK(ListNode<Integer> preL, ListNode<Integer> l, int k){
+    int count=0;
+    ListNode<Integer> pre=null;
+    ListNode<Integer> head=l;
+    while(l!=null && count<k){
+        ListNode<Integer> next=l.next;
+        l.next=pre;
+        pre=l;
+        l=next;
+        count+=1;      
+    }
+    head.next=l;
+    if(preL!=null){
+        preL.next=pre;
+    }
+    return new Heads(pre,head);
+}
+
+//Heads consist of the head node of a sublist and the head node of the next sublist
+class Heads {
+    ListNode<Integer> head1;
+    ListNode<Integer> head2;
+    ListNode<Integer> tail1;
+    Heads(ListNode<Integer> head1, ListNode<Integer> tail1){
+        this.head1=head1;
+        this.head2=tail1.next;
+        this.tail1=tail1;
+    }
+}
+
+int countNodes(ListNode<Integer> l){
+    int count=0;
+    while(l!=null){
+        l=l.next;
+        count+=1;
+    }
+    return count;
+}
