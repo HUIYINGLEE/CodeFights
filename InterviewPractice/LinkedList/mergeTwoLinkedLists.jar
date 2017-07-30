@@ -1,0 +1,41 @@
+// Definition for singly-linked list:
+// class ListNode<T> {
+//   ListNode(T x) {
+//     value = x;
+//   }
+//   T value;
+//   ListNode<T> next;
+// }
+//
+ListNode<Integer> mergeTwoLinkedLists(ListNode<Integer> l1, ListNode<Integer> l2) {
+    if(l1==null){return l2;}
+    if(l2==null){return l1;}
+    ListNode<Integer> head=null;
+    if(l1.value>l2.value){
+        head=new ListNode(l2.value);
+        l2=l2.next;
+    }else{
+        head=new ListNode(l1.value);
+        l1=l1.next;
+    }
+    ListNode<Integer> curr=head;
+    while(l1!=null || l2!=null){
+        if(l1==null){
+            curr.next=new ListNode(l2.value);
+            l2=l2.next;
+        }else if(l2==null){
+            curr.next=new ListNode(l1.value);
+            l1=l1.next;
+        }else{
+            if(l1.value>l2.value){
+                curr.next=new ListNode(l2.value);
+                l2=l2.next;
+            }else{
+                 curr.next=new ListNode(l1.value);
+                 l1=l1.next;
+            }
+        }
+        curr=curr.next;
+    }
+    return head;
+}
