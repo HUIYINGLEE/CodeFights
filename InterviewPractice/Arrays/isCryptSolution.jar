@@ -1,0 +1,30 @@
+boolean isCryptSolution(String[] crypt, char[][] solution) {
+    HashMap<Character, Integer> map=charArrToMap(solution);
+    long sum=0;
+    for(int i=0; i<crypt.length; i++){
+        long value=decryptStr(crypt[i],map);
+        if(value==-1){return false;}
+        if(i==crypt.length-1){
+            return sum==value;
+        }
+        sum+=value;
+    }
+    return true;
+}
+
+HashMap<Character,Integer> charArrToMap(char[][] solution){
+    HashMap<Character, Integer> map=new HashMap<>();
+    for(char[] cArr: solution){
+        map.put(cArr[0],Character.getNumericValue(cArr[1]));
+    }
+    return map;
+}
+
+long decryptStr(String s, HashMap<Character, Integer> map){
+    String strNum="";
+    if(map.get(s.charAt(0))==0 && s.length()>1){return -1;}
+    for(char c:s.toCharArray()){
+        strNum+=map.get(c)+"";
+    }
+    return Long.parseLong(strNum);
+}
