@@ -1,0 +1,23 @@
+boolean areFollowingPatterns(String[] strings, String[] patterns) {
+    LinkedHashMap<String, String> lhMap=new LinkedHashMap<String, String>();
+    for(int i=0;i<strings.length;i++){
+        if(lhMap.containsKey(strings[i])){
+            if(!lhMap.get(strings[i]).equals(patterns[i])){return false;}
+        }else{
+            lhMap.put(strings[i],patterns[i]);
+        }
+    }
+    LinkedHashMap<String, String> lhMap1=new LinkedHashMap<String, String>();
+    for(int i=0;i<strings.length;i++){
+        if(lhMap1.containsKey(patterns[i])){
+            if(!lhMap1.get(patterns[i]).equals(strings[i])){return false;}
+        }else{
+            lhMap1.put(patterns[i],strings[i]);
+        }
+    }
+    
+    return true;
+    
+    
+    
+}
