@@ -1,0 +1,50 @@
+// Definition for singly-linked list:
+// class ListNode<T> {
+//   ListNode(T x) {
+//     value = x;
+//   }
+//   T value;
+//   ListNode<T> next;
+// }
+//
+ListNode<Integer> rearrangeLastN(ListNode<Integer> l, int n) {
+    //this part of codes is to calculate the len of the linkedlist 
+    //and get the last node.
+    int len=1;
+    ListNode<Integer> lastNode=null;
+    ListNode<Integer> countLen=l;
+    while(countLen!=null && countLen.next!=null){
+        len+=1;
+        countLen=countLen.next;
+    }
+    lastNode=countLen;
+    // if the linkedlist is empty or
+    // if n is 0 or 
+    // if n is equal to the len of the linkedlist
+    // return the original linkedlist
+    if(l==null || n==0 || len==n){return l;}
+    
+    //loop through the first (len-n) nodes
+    int count=0;
+    int breakIndex=len-n;
+    ListNode<Integer> returnHead=null;
+    ListNode<Integer> pre=null;
+    ListNode<Integer> curr=l;
+    while(curr!=null){
+        //seperate the list and set the sencond list's head as the return list head
+        //and delete the pointer from the first sublist
+        if(count==breakIndex){
+            returnHead=curr;
+            pre.next=null;
+            break;
+        }
+        pre=curr;
+        curr=curr.next;
+        count+=1;
+    }
+    //insert the second sublist in front of the first sublist 
+    //by creating a pointer from the tail of the second to the head of the first
+    lastNode.next=l;
+    return returnHead;
+}
+
