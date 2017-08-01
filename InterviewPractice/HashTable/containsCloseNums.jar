@@ -1,0 +1,14 @@
+boolean containsCloseNums(int[] nums, int k) {
+    HashMap<Integer, Integer> map=new HashMap<>();
+    int index=0;
+    for (int n:nums){
+        if(map.containsKey(n)){
+            if(index-map.get(n)<=k){
+                return true;
+            }
+        }
+        map.put(n,index);
+        index+=1;
+    }
+    return false;
+}
