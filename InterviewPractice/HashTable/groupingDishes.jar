@@ -1,0 +1,43 @@
+String[][] groupingDishes(String[][] dishes) {
+    HashMap<String, ArrayList<String>> ingre_map=new HashMap<String, ArrayList<String>>();
+    for (int i=0; i<dishes.length;i++){
+        String dish_name;
+        dish_name=dishes[i][0];
+        for (int j=1; j<dishes[i].length; j++){
+            if (ingre_map.containsKey(dishes[i][j])){
+                ingre_map.get(dishes[i][j]).add(dish_name);
+            }else{
+                ArrayList<String> dis=new ArrayList<String>();
+                dis.add(dish_name);
+                ingre_map.put(dishes[i][j],dis);
+            }
+        }
+    }
+    TreeMap<String, ArrayList<String>> map2=new TreeMap<String, ArrayList<String>>();
+    for (String k: ingre_map.keySet()){
+        if(ingre_map.get(k).size()>=2){
+            ArrayList<String> sortList=new ArrayList<String>();
+            sortList=ingre_map.get(k);
+            Collections.sort(sortList);
+            map2.put(k,sortList);
+        }
+    }
+    
+    List<List<String>> resultList=new ArrayList<List<String>>();
+    for (String ingre: map2.keySet()){
+        List<String> ingre_dishes= new ArrayList<String>();
+        ingre_dishes.add(ingre);
+        for (String d: map2.get(ingre)){
+            ingre_dishes.add(d);
+        }
+        resultList.add(ingre_dishes);
+    }
+    
+    String[][] resultArray=new String[resultList.size()][];
+    int fill=0;
+    for (List<String> nestedList: resultList){
+        resultArray[fill++]=nestedList.toArray(new String[nestedList.size()]);
+    }
+    
+    return resultArray;
+}
