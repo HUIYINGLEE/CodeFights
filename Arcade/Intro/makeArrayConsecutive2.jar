@@ -1,0 +1,7 @@
+int makeArrayConsecutive2(int[] statues) {
+    Arrays.sort(statues);
+    int smallest=statues[0];
+    int largest=statues[statues.length-1];
+    int[] array = IntStream.rangeClosed(smallest, largest).toArray();
+    return array.length-statues.length;
+}
