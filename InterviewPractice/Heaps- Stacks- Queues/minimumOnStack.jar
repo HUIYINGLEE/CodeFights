@@ -1,0 +1,22 @@
+
+int[] minimumOnStack(String[] operations) {
+    ArrayList<Integer> stack=new ArrayList<>();
+    ArrayList<Integer> min=new ArrayList<>();
+    for(String s: operations){
+        String[] opNo=s.split(" ");
+        String op=opNo[0];
+        
+        if(op.equals("push")){
+            stack.add(Integer.parseInt(opNo[1]));
+        }
+        else if(op.equals("pop")){
+            stack.remove(stack.size()-1);
+        }
+        else{  
+            if(stack.isEmpty()){continue;}
+            min.add(Collections.min(stack));
+        }
+    }
+    return min.stream().mapToInt(Integer::intValue).toArray();
+}
+
