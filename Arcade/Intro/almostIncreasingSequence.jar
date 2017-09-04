@@ -1,0 +1,15 @@
+boolean almostIncreasingSequence(int[] sequence) {
+    
+    ArrayList<Integer> seq = new ArrayList<Integer>(Arrays.stream(sequence).boxed().collect(Collectors.toList()));
+     int error=0;
+     for(int i=0; i<seq.size()-1; i++){
+         if(seq.get(i)>=seq.get(i+1)){
+            error+=1;
+            if(i!=0 && i+2<seq.size() && seq.get(i)>=seq.get(i+2) && seq.get(i-1)>=seq.get(i+1)){
+                return false;
+            }   
+         }
+     }
+     return error<=1;    
+        
+}
