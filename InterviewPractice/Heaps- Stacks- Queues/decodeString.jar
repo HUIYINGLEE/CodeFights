@@ -1,0 +1,18 @@
+String decodeString(String s) {
+    //if the string s contains "["
+    while (s.indexOf("[")>0){     
+        int innerestStart=s.lastIndexOf("[");
+        int innerestEnd=s.indexOf("]",innerestStart); 
+        int digits=innerestStart-1;
+        //get all the digits of the number
+        while (digits!=0 && Character.isDigit(s.charAt(digits-1))){
+            digits-=1;
+        }
+        int times= Integer.parseInt(s.substring(digits, innerestStart));
+        String beReplaced= innerestEnd==s.length()-1? s.substring(digits):s.substring(digits,innerestEnd+1);
+        String repeated=new String(new char[times]).replace("\0",beReplaced.substring(beReplaced.indexOf("[")+1, beReplaced.indexOf("]")));
+        s= s.replace(beReplaced,repeated);
+    }
+    return s;
+    
+}
