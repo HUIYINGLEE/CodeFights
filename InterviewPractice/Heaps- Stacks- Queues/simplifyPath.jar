@@ -1,0 +1,28 @@
+String simplifyPath(String path) {
+    String[] sArray=path.split("/");
+    ArrayList<String> stack=new ArrayList<>();
+    for (String s: sArray){
+        if(s.length()==0){
+            continue;
+        }
+        else if(s.equals(".")){
+            continue;
+        }
+        else if(s.equals("..")){
+            if(stack.size()<1){
+                continue;
+            }
+            else{
+                stack.remove(stack.size()-1);
+                continue;
+            } 
+        }
+        stack.add(s);
+    }
+    String simPath="";
+    for(String sp: stack){
+        simPath+="/"+sp;
+    }
+    if(simPath==""){return "/";}
+    else{return simPath;}
+}
