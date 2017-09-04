@@ -1,0 +1,15 @@
+int[] nextLarger(int[] a) {
+    int[] result=new int[a.length];
+    for (int i=0; i<a.length; i++){
+        int[] subArr=Arrays.copyOfRange(a,i,a.length);
+        result[i]=-1;
+        for (int j: subArr){
+            if (j>a[i]){
+                result[i]=j;
+                break;
+            }
+            
+        }
+    }
+    return result;
+}
