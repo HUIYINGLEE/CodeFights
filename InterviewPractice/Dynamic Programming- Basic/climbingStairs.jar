@@ -1,0 +1,14 @@
+int climbingStairs(int n) {
+    int loop=0;
+    ArrayList<Integer> count= new ArrayList<Integer>();
+    count.add(0);
+    count.add(1);
+    while (loop<n){
+        loop++;
+        count.add(count.get(count.size()-1)+count.get(count.size()-2));
+        System.out.println(count);
+    }
+    return count.get(count.size()-1);
+}
+
+
