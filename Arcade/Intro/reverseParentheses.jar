@@ -1,0 +1,34 @@
+String reverseParentheses(String s) {
+    Stack stack=new Stack();
+    Queue queue=new LinkedList();
+    for (int i=0; i<s.length(); i++){
+        char c=s.charAt(i);
+        if(c==')'){
+            while (!stack.peek().equals('(')){
+                queue.add(stack.pop());
+            }
+            stack.pop();
+            while (queue.size()>0){
+                stack.push(queue.poll());
+            }
+        }
+        stack.push(c);
+    }
+    
+    Stack stack1=new Stack();
+    while(stack.size()>0){
+        Object sc=stack.pop();
+        if(!sc.equals('(') && !sc.equals(')') ){
+            stack1.push(sc);
+        }
+    }
+    
+    StringBuilder sb=new StringBuilder();
+    while (stack1.size()>0){
+        sb.append(stack1.pop());
+    }
+    
+  
+    String result= sb.toString();
+    return result;
+}
