@@ -1,0 +1,25 @@
+int commonCharacterCount(String s1, String s2) {
+    HashMap<Character, Integer> s1Map= toMap(s1);
+    HashMap<Character, Integer> s2Map= toMap(s2);
+    int common=0;
+    for(Character c: s1Map.keySet()){
+        if (s2Map.containsKey(c)){
+            common+=(s1Map.get(c)<=s2Map.get(c)? s1Map.get(c): s2Map.get(c));
+        }
+    }
+    return common;
+    
+}
+
+HashMap<Character, Integer> toMap(String s){
+    char[] charArray=s.toCharArray();
+    HashMap<Character, Integer> map= new HashMap<Character, Integer>();
+    for(char c: charArray){
+        if(map.containsKey(c)){
+            map.put(c, map.get(c)+1);
+        }else{
+            map.put(c,1);
+        }
+    }
+    return map;
+}
