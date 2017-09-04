@@ -1,0 +1,15 @@
+String[] allLongestStrings(String[] inputArray) {
+    List<String> longest= new ArrayList<String>();
+    int maxLen=0;
+    for(int i=0; i<inputArray.length;i++){
+        if(inputArray[i].length()>maxLen){
+            maxLen=inputArray[i].length();
+        }
+    }
+    for(int i=0; i<inputArray.length;i++){
+        if(inputArray[i].length()==maxLen){
+            longest.add(inputArray[i]);
+        }
+    }
+    return longest.toArray(new String[longest.size()]);
+}
